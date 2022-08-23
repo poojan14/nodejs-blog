@@ -9,6 +9,7 @@
   "author": "Poojan Shah",
   "license": "MIT",
   "dependencies": {
+    "connect-mongo": "^4.6.0",
     "dompurify": "^2.3.10",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
