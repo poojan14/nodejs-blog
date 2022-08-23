@@ -4,18 +4,31 @@ const dotenv = require('dotenv')
 const Article = require('./models/article')
 const articleRouter = require('./routes/articles')
 const methodOverride = require('method-override')
+const session = require('express-session')
 const connectDB = require('./config/db')
 
 // Load config
 //dotenv.config({ path: './config/config.env' })
-
+connectDB()
 const app = express()
 
-connectDB()
+
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use(methodOverride('_method'))
+
+
+// Sessions
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({mongoUrl: process.env.MONGO_URI,}),
+  })
+)
+
 
 app.get('/', async (req, res) => {
   const articles = await Article.find().sort({ createdAt: 'desc' })
